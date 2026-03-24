@@ -1,19 +1,14 @@
 {
-  "name": "my-turborepo",
+  "name": "voting-turbo",
   "private": true,
+  "packageManager": "npm@10.0.0",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "build": "echo root build",
+    "dev": "echo root dev"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "turbo": "^2.8.17",
-    "typescript": "5.9.2"
+    "turbo": "^2.8.20"
   },
-  "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
   }
