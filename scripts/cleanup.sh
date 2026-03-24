@@ -1,20 +1,34 @@
 #!/bin/bash
+set -e
 
-echo "=== CLEANUP START ==="
+APP_NAME="next-app"
+APP_DIR="/var/www/voting-app"
 
-APP_DIR="/home/ec2-user/app"
+echo "🔹 Cleanup started..."
 
-# Stop running app (safe)
-pm2 stop all || true
-pm2 delete all || true
-
-# Ensure directory exists
-if [ ! -d "$APP_DIR" ]; then
-  echo "Creating app directory..."
-  mkdir -p $APP_DIR
+# 1. Check if PM2 app is running → stop it
+if command -v pm2 >/dev/null 2>&1; then
+  if pm2 describe $APP_NAME > /dev/null 2>&1; then
+    echo "App is running → stopping..."
+    pm2 stop $APP_NAME || true
+    pm2 delete $APP_NAME || true
+  else
+    echo "App not running"
+  fi
 else
-  echo "Cleaning existing app directory..."
-  rm -rf $APP_DIR/*
+  echo "PM2 not installed"
 fi
 
-echo "=== CLEANUP DONE ==="
+# 2. Check if directory exists
+if [ -d "$APP_DIR" ]; then
+  echo "Directory exists → cleaning..."
+
+  # 🔥 Delete everything including hidden files
+  rm -rf ${APP_DIR:?}/* ${APP_DIR}/.[!.]* ${APP_DIR}/..?* || true
+
+else
+  echo "Directory not found → creating..."
+  mkdir -p "$APP_DIR"
+fi
+
+echo "✅ Cleanup completed"
