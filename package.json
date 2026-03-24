@@ -2,14 +2,15 @@
   "name": "voting-turbo",
   "private": true,
   "packageManager": "npm@10.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "echo root build",
     "dev": "echo root dev"
   },
   "devDependencies": {
     "turbo": "^2.8.20"
-  },
-  "engines": {
-    "node": ">=18"
   }
 }
